@@ -3,31 +3,55 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>jQuery Mobile: Theme Download</title>
+		<title>Malaria Mapping</title>
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,900,300italic,900italic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="themes/malaria-mapping.min.css" />
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<style>
+			*, .ui-body-a input {
+				font-family:"Lato";
+				font-weight:400;
+			}
+			.malaria-header {
+				height:50px;
+			}
+			.malaria-button {
+				width:47.5%;
+			}
+			.ui-header .ui-title,
+			.ui-footer .ui-title {
+				font-weight:300;
+				font-size:20px;
+			}
+			.ui-fullsize .ui-btn-inner,
+			input.ui-input-text,
+			textarea.ui-input-text {
+				font-size:14px;
+				font-weight:300;
+			}
+		</style>
 	</head>
-<body> 
+<body>
 
 <div data-role="page" id="home" data-theme="a">
 
-	<div data-role="header">
-		<h1>Mapping Malaria</h1>
+	<div data-role="header" class="malaria-header">
+		<h1 class="malaria-title">Mapping Malaria</h1>
 	</div>
 
 	<div data-role="content">
-		<a href="#report" data-role="button">Report</a>	
-		<a href="#visualize" data-role="button">Visualize</a>
+		<a href="#report" data-role="button" data-inline="true" class="malaria-button">Report</a>	
+		<a href="#visualize" data-role="button" data-inline="true" class="malaria-button">Visualize</a>
 	</div>
 
 </div>
 
 <div data-role="page" id="report" data-theme="a">
 
-	<div data-role="header">
-		<h1>Report Incidence</h1>
+	<div data-role="header" class="malaria-header">
+		<h1 class="malaria-title">Report Incidence</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
@@ -81,8 +105,8 @@
 
 <div data-role="page" id="visualize" data-theme="a">
 
-	<div data-role="header">
-		<h1>Visualize Data</h1>
+	<div data-role="header" class="malaria-header">
+		<h1 class="malaria-title">Visualize Data</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
