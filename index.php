@@ -111,11 +111,11 @@
 	<div data-role="header" class="malaria-header">
 		<h1>Mapping Malaria</h1>
 		<a href="#info" data-icon="info" data-iconpos="notext">Info</a>
+		<a href="#report" data-icon="plus" data-iconpos="notext">Report incident</a>
 	</div>
 
 	<div data-role="content">
-		<a href="#report" data-role="button" data-inline="true" class="malaria-button"><img src="themes/images/report.png" class="malaria-button-image"><br/>Report</a>	
-		<a href="#visualize" data-role="button" data-inline="true" class="malaria-button"><img src="themes/images/malaria-map.png" class="malaria-button-image"><br/>Visualize</a>
+		TODO: Place visualization data here.
 	</div>
 
 </div>
@@ -192,18 +192,6 @@
 			<!-- Also get current location -->
 			<button type="submit" name="submit" value="submit-value">Submit</button>
 		</form>
-	</div>
-
-</div>
-
-<div data-role="page" id="visualize" data-theme="a">
-
-	<div data-role="header" class="malaria-header">
-		<h1>Visualize Data</h1>
-		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
-	</div>
-
-	<div data-role="content">
 	</div>
 
 </div>
