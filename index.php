@@ -9,6 +9,40 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<script>
+			// TODO: does this get initialized with the page?
+			$(function() {
+				var Geo={};
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(success, error);
+				}
+
+				// get the latitude and longitude
+				function success(position) {
+					Geo.lat = position.coords.latitude;
+					Geo.lng = position.coords.longitude;
+					postPosition(Geo.lat, Geo.lng);
+				}
+
+				function error() {
+					console.log("Geocoder failed.");
+				}
+
+				function postPosition(lat, lng) {
+					// TODO: where to pass this information?
+				}
+
+				function date() {
+					var now = new Date();
+					now = now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
+					postTime(now);
+				}
+
+				function postTime(now) {
+					// TODO: where to pass this information?
+				}
+			})
+		</script>
 		<style>
 			*, .ui-body-a input {
 				font-family:"Lato";
@@ -19,6 +53,7 @@
 			}
 			.malaria-button {
 				width:47.5%;
+				height:300px;
 			}
 			.ui-header .ui-title,
 			.ui-footer .ui-title {
@@ -36,6 +71,11 @@
 				left:20px;
 				top:15px;
 			}
+			.malaria-button-image {
+				height:200px;
+				width:200px;
+				text-align:center;			
+			}
 		</style>
 	</head>
 <body>
@@ -48,8 +88,8 @@
 	</div>
 
 	<div data-role="content">
-		<a href="#report" data-role="button" data-inline="true" class="malaria-button">Report</a>	
-		<a href="#visualize" data-role="button" data-inline="true" class="malaria-button">Visualize</a>
+		<a href="#report" data-role="button" data-inline="true" class="malaria-button malaria-report"><img src="themes/images/report.png" class="malaria-button-image"><br/>Report</a>	
+		<a href="#visualize" data-role="button" data-inline="true" class="malaria-button malaria-visualize">Visualize</a>
 	</div>
 
 </div>
@@ -96,27 +136,31 @@
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup">
 					<legend>Symptoms:</legend>
-					<input type="checkbox" name="chills" id="checkbox-chills" class="custom" />
-					<label for="checkbox-chills">Chills</label>
-					<input type="checkbox" name="fever" id="checkbox-fever" class="custom" />
-					<label for="checkbox-fever">Fever</label>
-					<input type="checkbox" name="sweating" id="checkbox-sweating" class="custom" />
-					<label for="checkbox-sweating">Sweating</label>
-					<input type="checkbox" name="headache" id="checkbox-headache" class="custom" />
-					<label for="checkbox-headache">Headache</label>
-					<input type="checkbox" name="fatigue" id="checkbox-fatigue" class="custom" />
-					<label for="checkbox-fatigue">Fatigue</label>
-					<input type="checkbox" name="nausea" id="checkbox-nausea" class="custom" />
-					<label for="checkbox-nausea">Nausea</label>
-					<input type="checkbox" name="vomiting" id="checkbox-vomiting" class="custom" />
-					<label for="checkbox-vomiting">Vomiting</label>
-					<input type="checkbox" name="cough" id="checkbox-cough" class="custom" />
-					<label for="checkbox-cough">Dry cough</label>
+					<? 
+						$symptoms = array("chills", "fever", "sweating", "headache", "fatigue", "nausea", "vomiting", "cough");
+						foreach ($symptoms as $s):
+					?>
+						<input type="checkbox" name="symptoms[]" value="<?=$s ?>" id="checkbox-<?=$s ?>" class="custom" />
+						<label for="checkbox-<?= $s ?>"><?= ucfirst($s) ?></label>
+					<? endforeach; ?>
 				</fieldset>
 			</div>
 			<div data-role="fieldcontain">
-				<label for="date-onset">Starting:</label>
+				<label for="date-onset">Onset of symptoms:</label>
 				<input type="date" name="date-onset" id="date-onset" value=""/>
+			</div>
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+					<legend>Diagnosed by doctor?</legend>
+					<input type="radio" name="diagnosed" id="radio-yes" value="y"/>
+					<label for="radio-yes">Yes</label>
+					<input type="radio" name="diagnosed" id="radio-no" value="n"/>
+					<label for="radio-no">No</label>
+				</fieldset>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="date-diagnosed">Date of diagnosis:</label>
+				<input type="date" name="date-diagnosed" id="date-diagnosed" value=""/>
 			</div>
 			<!-- Also get current date -->
 			<!-- Also get current location -->
