@@ -1,26 +1,17 @@
 <!DOCTYPE html> 
-<html> 
+<html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1"> 
-		<title>Mapping Malaria</title> 
-		<link rel="stylesheet"  href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />	
-		<link rel="stylesheet" href="../../docs/_assets/css/jqm-docs.css" />
-		<link rel="stylesheet"  href="http://jquerymobile.com/demos/1.0a4.1/experiments/ui-datepicker/jquery.ui.datepicker.mobile.css" /> 
-		<script src="http://code.jquery.com/jquery-1.5.min.js"></script>	
-		<script>
-			//reset type=date inputs to text
-			$( document ).bind( "mobileinit", function(){
-				$.mobile.page.prototype.options.degradeInputs.date = true;
-			});	
-		</script>
-		<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>	
-		<script src="http://jquerymobile.com/demos/1.0a4.1/experiments/ui-datepicker/jQuery.ui.datepicker.js"></script>
-		<script src="http://jquerymobile.com/demos/1.0a4.1/experiments/ui-datepicker/jquery.ui.datepicker.mobile.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>jQuery Mobile: Theme Download</title>
+		<link rel="stylesheet" href="themes/malaria-mapping.min.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 	</head>
 <body> 
 
-<div data-role="page" id="home">
+<div data-role="page" id="home" data-theme="a">
 
 	<div data-role="header">
 		<h1>Mapping Malaria</h1>
@@ -33,7 +24,7 @@
 
 </div>
 
-<div data-role="page" id="report">
+<div data-role="page" id="report" data-theme="a">
 
 	<div data-role="header">
 		<h1>Report Incidence</h1>
@@ -44,7 +35,7 @@
 		<form action="form.php" method="post">
 			<div data-role="fieldcontain">
 				<label for="age">Age:</label>
-				<input type="text" name="age" id="age" value="" />
+				<input type="text" name="age" id="age" value="" data-clear-btn="true"/>
 			</div>
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup">
@@ -64,10 +55,20 @@
 					<label for="checkbox-fever">Fever</label>
 					<input type="checkbox" name="sweating" id="checkbox-sweating" class="custom" />
 					<label for="checkbox-sweating">Sweating</label>
+					<input type="checkbox" name="headache" id="checkbox-headache" class="custom" />
+					<label for="checkbox-headache">Headache</label>
+					<input type="checkbox" name="fatigue" id="checkbox-fatigue" class="custom" />
+					<label for="checkbox-fatigue">Fatigue</label>
+					<input type="checkbox" name="nausea" id="checkbox-nausea" class="custom" />
+					<label for="checkbox-nausea">Nausea</label>
+					<input type="checkbox" name="vomiting" id="checkbox-vomiting" class="custom" />
+					<label for="checkbox-vomiting">Vomiting</label>
+					<input type="checkbox" name="cough" id="checkbox-cough" class="custom" />
+					<label for="checkbox-cough">Dry cough</label>
 				</fieldset>
 			</div>
 			<div data-role="fieldcontain">
-				<label for="date-onset">Date of onset:</label>
+				<label for="date-onset">Starting:</label>
 				<input type="date" name="date-onset" id="date-onset" value=""/>
 			</div>
 			<!-- Also get current date -->
@@ -78,7 +79,7 @@
 
 </div>
 
-<div data-role="page" id="visualize">
+<div data-role="page" id="visualize" data-theme="a">
 
 	<div data-role="header">
 		<h1>Visualize Data</h1>
