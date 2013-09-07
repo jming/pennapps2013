@@ -1,0 +1,95 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1"> 
+		<title>Mapping Malaria</title> 
+		<link rel="stylesheet"  href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />	
+		<link rel="stylesheet" href="../../docs/_assets/css/jqm-docs.css" />
+		<link rel="stylesheet"  href="http://jquerymobile.com/demos/1.0a4.1/experiments/ui-datepicker/jquery.ui.datepicker.mobile.css" /> 
+		<script src="http://code.jquery.com/jquery-1.5.min.js"></script>	
+		<script>
+			//reset type=date inputs to text
+			$( document ).bind( "mobileinit", function(){
+				$.mobile.page.prototype.options.degradeInputs.date = true;
+			});	
+		</script>
+		<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>	
+		<script src="http://jquerymobile.com/demos/1.0a4.1/experiments/ui-datepicker/jQuery.ui.datepicker.js"></script>
+		<script src="http://jquerymobile.com/demos/1.0a4.1/experiments/ui-datepicker/jquery.ui.datepicker.mobile.js"></script>
+	</head>
+<body> 
+
+<div data-role="page" id="home">
+
+	<div data-role="header">
+		<h1>Mapping Malaria</h1>
+	</div>
+
+	<div data-role="content">
+		<a href="#report" data-role="button">Report</a>	
+		<a href="#visualize" data-role="button">Visualize</a>
+	</div>
+
+</div>
+
+<div data-role="page" id="report">
+
+	<div data-role="header">
+		<h1>Report Incidence</h1>
+		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+	</div>
+
+	<div data-role="content">
+		<form action="form.php" method="post">
+			<div data-role="fieldcontain">
+				<label for="age">Age:</label>
+				<input type="text" name="age" id="age" value="" />
+			</div>
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+					<legend>Gender:</legend>
+					<input type="radio" name="gender" id="radio-female" value="f"/>
+					<label for="radio-female">Female</label>
+					<input type="radio" name="gender" id="radio-male" value="m"/>
+					<label for="radio-male">Male</label>
+				</fieldset>
+			</div>
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+					<legend>Symptoms:</legend>
+					<input type="checkbox" name="chills" id="checkbox-chills" class="custom" />
+					<label for="checkbox-chills">Chills</label>
+					<input type="checkbox" name="fever" id="checkbox-fever" class="custom" />
+					<label for="checkbox-fever">Fever</label>
+					<input type="checkbox" name="sweating" id="checkbox-sweating" class="custom" />
+					<label for="checkbox-sweating">Sweating</label>
+				</fieldset>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="date-onset">Date of onset:</label>
+				<input type="date" name="date-onset" id="date-onset" value=""/>
+			</div>
+			<!-- Also get current date -->
+			<!-- Also get current location -->
+			<button type="submit" name="submit" value="submit-value">Submit</button>
+		</form>
+	</div>
+
+</div>
+
+<div data-role="page" id="visualize">
+
+	<div data-role="header">
+		<h1>Visualize Data</h1>
+		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+	</div>
+
+	<div data-role="content">
+		Content!
+	</div>
+
+</div>
+
+</body>
+</html>
