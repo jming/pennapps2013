@@ -1,4 +1,29 @@
-<!DOCTYPE html> 
+<!-- TODO: ADD JS VALIDATION FOR FIELDS -->
+<?
+	if ($_POST) {
+		require_once("database.php");
+		connect_db();
+		
+		$age = mysql_real_escape_string($_POST["age"]);
+		$gender = mysql_real_escape_string($_POST["gender"]);
+		$onset = date(mysql_real_escape_string($_POST["date-onset"]));
+		$diagnosed = mysql_real_escape_string($_POST["diagnosed"]);
+		$date = date(mysql_real_escape_string($_POST["date-diagnosed"]));
+		$symptoms = $_POST["symptoms"];
+
+		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date')");
+		if (!$result):
+			// TODO: display error
+		else:
+			$id = mysql_insert_id();
+			foreach ($symptoms as $symp) {
+				$symp = mysql_real_escape_string($symp);
+				$result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
+			}		
+			// TODO: display success
+		endif;
+	}
+?> 
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -120,7 +145,7 @@
 	</div>
 
 	<div data-role="content">
-		<form action="form.php" method="post">
+		<form method="post" action="#home">
 			<div data-role="fieldcontain">
 				<label for="age">Age:</label>
 				<input type="text" name="age" id="age" value="" data-clear-btn="true"/>
