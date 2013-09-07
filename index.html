@@ -9,6 +9,40 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<script>
+			// TODO: does this get initialized with the page?
+			$(function() {
+				var Geo={};
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(success, error);
+				}
+
+				// get the latitude and longitude
+				function success(position) {
+					Geo.lat = position.coords.latitude;
+					Geo.lng = position.coords.longitude;
+					postPosition(Geo.lat, Geo.lng);
+				}
+
+				function error() {
+					console.log("Geocoder failed.");
+				}
+
+				function postPosition(lat, lng) {
+					// TODO: where to pass this information?
+				}
+
+				function date() {
+					var now = new Date();
+					now = now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
+					postTime(now);
+				}
+
+				function postTime(now) {
+					// TODO: where to pass this information?
+				}
+			})
+		</script>
 		<style>
 			*, .ui-body-a input {
 				font-family:"Lato";
