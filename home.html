@@ -15,7 +15,7 @@
 				font-weight:400;
 			}
 			.malaria-header {
-				height:50px;
+				height:60px;
 			}
 			.malaria-button {
 				width:47.5%;
@@ -23,13 +23,18 @@
 			.ui-header .ui-title,
 			.ui-footer .ui-title {
 				font-weight:300;
-				font-size:20px;
+				font-size:24px;
 			}
 			.ui-fullsize .ui-btn-inner,
 			input.ui-input-text,
 			textarea.ui-input-text {
 				font-size:14px;
 				font-weight:300;
+			}
+			.ui-header .ui-btn-left,
+			.ui-footer .ui-button-left {
+				left:20px;
+				top:15px;
 			}
 		</style>
 	</head>
@@ -38,7 +43,8 @@
 <div data-role="page" id="home" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1 class="malaria-title">Mapping Malaria</h1>
+		<h1>Mapping Malaria</h1>
+		<a href="#info" data-icon="info" data-iconpos="notext">Info</a>
 	</div>
 
 	<div data-role="content">
@@ -48,10 +54,27 @@
 
 </div>
 
+<div data-role="page" id="info" data-theme="a">
+
+	<div data-role="header" class="malaria-header">
+		<h1>About Mapping Malaria</h1>
+		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+	</div>
+
+	<div data-role="content">
+		3.3 billion people, or half the world's population is at risk for malaria. 
+		<br><br>
+		This application will mobile technology to crowd source the spread of malaria to better inform preventative measures.
+		<br><br>
+		<strong>Mapping Malaria</strong> was created by Alisa Nguyen, Deborah Alves, Joy Ming, and Julie Zhang for PennApps Fall 2013.
+	</div>
+
+</div>
+
 <div data-role="page" id="report" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1 class="malaria-title">Report Incidence</h1>
+		<h1>Report Incidence</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
@@ -106,7 +129,7 @@
 <div data-role="page" id="visualize" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1 class="malaria-title">Visualize Data</h1>
+		<h1>Visualize Data</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
