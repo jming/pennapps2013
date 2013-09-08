@@ -28,7 +28,7 @@
 		connect_db();
 		$data = array();
 
-		$fields = array("id", "gender", "onset", "diagnosed", "diagdate", "age");
+		$fields = array("id", "gender", "onset", "diagnosed", "diagdate", "age", "latitude", "longitude", "currentdate");
 		$result = mysql_query("SELECT * FROM reports");
 		while ($row = mysql_fetch_array($result)) {
 			foreach ($fields as $field) {
