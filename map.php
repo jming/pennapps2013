@@ -1,6 +1,6 @@
 <?php require_once("database.php"); ?>
 
-<div id="map" style="height: 100% !important;"></div>
+<div id="map"></div>
 <script>
 
 /*************************************************************************
@@ -46,15 +46,21 @@ function showDate(date) {
 /****************************************************************************
  * Leaflet
  ***************************************************************************/
-var map = L.map('map', {
+var map;
+if (d3.selectAll("svg").length != 0) {
+	map = L.map('map', {
     center: [1, 38],
    	zoom: 6
   });
+}
 
-  L.tileLayer('http://{s}.tile.cloudmade.com/018ce9c77aca42948f284396da6fdb8f/106960/256/{z}/{x}/{y}.png', {
+map.invalidateSize();
+map.setView([1, 38], 6);
+
+L.tileLayer('http://{s}.tile.cloudmade.com/018ce9c77aca42948f284396da6fdb8f/106960/256/{z}/{x}/{y}.png', {
   	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
   	maxZoom: 18
-  }).addTo(map);
+}).addTo(map);
  
 
 /* Alternate map tile style: grayscale
@@ -72,15 +78,23 @@ var g = svg.append("g")
         .attr("id", "outbreak_overlay");
 
 //window.onload = loadData;
+window.onresize = function() {
+	d3.select("#map")
+		.style("min-height", window.innerHeight - 62 + "px");
+}
+
+map.invalidateSize();
 
 /* Update the markers every second */
-var int = self.setInterval(loadData, 5*1000);
+var int = self.setInterval(loadData, 3*1000);
 
 //loadData();
 
 /* Adds markers based on the dataset */
 function showMap() {   	
-
+	d3.select("#map")
+		.style("min-height", window.innerHeight - 62 + "px");
+		
   // Clear old markers
   if (markers != null) {
     markers.clearLayers();
@@ -123,6 +137,8 @@ function showMap() {
 				.remove();
     
     map.on("viewreset", reset);
+    map.invalidateSize();
+
     reset();
  
     
@@ -181,8 +197,8 @@ function getRandomLatLng(map) {
 }
 
 function loadData() {
-  var data = <?php echo get_data(); ?>;
-  //d3.json("js/outbreaks.json", function(error, data) {
+  //var data = <php echo get_data(); ?>;
+  d3.json("js/outbreaks.json", function(error, data) {
     flatDB = [];
 
     data.forEach(function(d) {
@@ -232,6 +248,6 @@ function loadData() {
 	  
     // Add markers
     showMap();
-  //});
+  });
 };
 </script>

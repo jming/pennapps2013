@@ -155,7 +155,8 @@
         position: relative;
         width: 100%;
         height: 100%;
-        min-height: 420px;
+        min-height: 800px;
+        z-index: 1;
         overflow: hidden;
       }
       
@@ -180,6 +181,7 @@
       
       .leaflet-control-attribution {
         text-shadow: none;
+        text-decoration: none;
       }
 		</style>
 	</head>
