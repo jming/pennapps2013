@@ -29,6 +29,13 @@ var map = L.map('map', {
    	zoom: 6
   });
 
+  /*
+  L.tileLayer('http://{s}.tile.cloudmade.com/018ce9c77aca42948f284396da6fdb8f/106960/256/{z}/{x}/{y}.png', {
+  			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+  		maxZoom: 18
+  	}).addTo(map);
+  */
+
 L.tileLayer('http://{s}.tile.cloudmade.com/018ce9c77aca42948f284396da6fdb8f/22677/256/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
     maxZoom: 18
@@ -41,12 +48,7 @@ var svg;
 
 /* Adds markers based on the dataset */
 function showMap() {   	
-  /*
-  L.tileLayer('http://{s}.tile.cloudmade.com/018ce9c77aca42948f284396da6fdb8f/106960/256/{z}/{x}/{y}.png', {
-  			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-  		maxZoom: 18
-  	}).addTo(map);
-  */
+
   // Clear old markers
   if (markers != null) {
     markers.clearLayers();
@@ -59,6 +61,11 @@ function showMap() {
   map.addLayer(markers);
 
     /*
+svg = d3.select(map.getPanes().overlayPane).append("svg");
+var g = svg.append("g")
+        .attr("class", "leaflet-zoom-hide")
+        .attr("id", "outbreak_overlay");
+        
 var g = d3.select("#outbreak_overlay");
 		var cases = g.selectAll("circle")
       .data(flatDB)
@@ -121,10 +128,7 @@ function getRandomLatLng(map) {
 }
 
 function loadData() {
-  svg = d3.select(map.getPanes().overlayPane).append("svg");
-  var g = svg.append("g")
-        .attr("class", "leaflet-zoom-hide")
-        .attr("id", "outbreak_overlay");
+  var data = '<?php echo get_data() ?>';
 
   d3.json("js/outbreaks.json", function(error, data) {
     flatDB = [];
