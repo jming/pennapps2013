@@ -188,9 +188,9 @@
 			</div>
 			<?
 				date_default_timezone_set("America/New_York");
-				$curdate = date('m-d-Y h:i:s', time()); 
+				$curdate = date('Y-m-d h:i:s', time()); 
 			?>
-			<input type="hidden" name="currentdate" value="<?= $curdate ?>"/>
+			<input type="text" name="currentdate" value="<?= $curdate ?>"/>
 			<input type="hidden" name="latitude" id="location-latitude" />
 			<input type="hidden" name="longitude" id="location-longitude" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
