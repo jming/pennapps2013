@@ -41,7 +41,11 @@
 	}
 
 	$("#diagnosed-radio").change(function() {
-		$("#diagnosed-datepicker").style.display = "block";
+		if ($("#diagnosed-radio").value == "y") {
+			$("#diagnosed-datepicker").style.display = "block";	
+		} else {
+			$("#diagnosed-datepicker").style.display = "none";
+		}
 	});
 ?> 
 <html>
