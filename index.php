@@ -11,6 +11,7 @@
 		"gender" => array("What is the gender of the patient?", " Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer.", "")
 	);
 
+	$banner = 0; // 0 for no banner, 1 for success, 2 for error
 	if ($_POST) {
 		require_once("database.php");
 		connect_db();
@@ -29,14 +30,14 @@
 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
-			// $("#database-failure").popup();
+			$banner = 2;
 		else:
 			$id = mysql_insert_id();
 			foreach ($symptoms as $symp) {
 				$symp = mysql_real_escape_string($symp);
 				$result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
-			}		
-			//$("#database-success").popup();
+			}
+			$banner = 1;
 		endif;
 	}
 ?> 
@@ -62,7 +63,7 @@
   	<!--[if lte IE 8]><link rel="stylesheet" href="css/custom-marker-cluster-ie.css" /><![endif]-->
     <script src="lib/Leaflet.markercluster-master/dist/leaflet.markercluster-src.js"></script>
 		<script>
-			window.onload = function () {
+			$(document).ready(function () {
 				var Geo = {};
 
 				function success(position) {
@@ -84,27 +85,18 @@
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
-			}
 
-			function set_help(txts) {
-				$("#help-text00").text(txts[0]);
-				$("#help-text01").text(txts[1]);
-				$("#help-text02").text(txts[2]);
-			}
-
-			// $("input[name=diagnosed]").val().changeselected(function () {
-			// 	console.log("lol");
-			// })
-
-			// $("#diagnosed-radio").change(function() {
-			$("#diagnosed-radio input").change(function () {
-				console.log("lol");
-				if ($("#diagnosed-radio").val() == "y") {
-					$("#diagnosed-datepicker").show();	
-				} 
-				else {
-					$("#diagnosed-datepicker").hide();
+				function set_help(txts) {
+					$("#help-text00").text(txts[0]);
+					$("#help-text01").text(txts[1]);
+					$("#help-text02").text(txts[2]);
 				}
+
+				$("#message").fadeIn("slow");
+	    	$("#message a.close-notify").click(function() {
+	        	$("#message").fadeOut("slow");
+	        	return false;
+	    	});
 			});
 		</script>
 		<style>
@@ -140,6 +132,19 @@
 				width:150px;
 				padding:20px;
 				padding-top:50px;
+			}
+
+			#message {
+				padding: 10px;
+				text-align: center;
+				background-color: #ccc;
+				color: #000;
+				margin-bottom: 20px;
+			}
+
+			#message a {
+				float: right;
+				font-size: 16px;
 			}
 
       .ui-content {
@@ -216,30 +221,6 @@
 			<? endforeach; ?>
 		</ul>
 
-	</div>
-
-</div>
-
-<div data-role="dialog" id="database-success" data-theme="a">
-
-	<div data-role="header">
-		<h1>Report Status</h1>
-	</div>
-
-	<div data-role="content">
-		Your report of a malaria incident has successfully been recorded to the server!
-	</div>
-
-</div>
-
-<div data-role="dialog" id="database-failure" data-theme="a">
-
-	<div data-role="header">
-		<h1>Report Status</h1>
-	</div>
-
-	<div data-role="content">
-		ERROR: Your report of a malaria incident has not successfully been recorded to the server. Please try again.
 	</div>
 
 </div>
