@@ -29,24 +29,25 @@
 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
-			$("#database-failure").popup();
+			// $("#database-failure").popup();
 		else:
 			$id = mysql_insert_id();
 			foreach ($symptoms as $symp) {
 				$symp = mysql_real_escape_string($symp);
 				$result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
 			}		
-			$("#database-success").popup();
+			//$("#database-success").popup();
 		endif;
 	}
 
-	$("#diagnosed-radio").change(function() {
-		if ($("#diagnosed-radio").value == "y") {
-			$("#diagnosed-datepicker").style.display = "block";	
-		} else {
-			$("#diagnosed-datepicker").style.display = "none";
-		}
-	});
+	// $("#diagnosed-radio").change(function() {
+	// 	if ($("#diagnosed-radio").val() == "y") {
+	// 		$("#diagnosed-datepicker").show();	
+	// 	} 
+	// 	else {
+	// 		$("#diagnosed-datepicker").hide();
+	// 	}
+	// });
 ?> 
 <html>
 	<head>
@@ -163,10 +164,7 @@
 		<ul data-role="listview" data-inset="true">
 			<? foreach ($help_text as $key=>$value): ?>
 			<li data-icon="false"><a href="#help"><?=$value[0]?></a></li>
-			<? 
-				$_SESSION["help-key"] = $key;
-				endforeach; 
-			?>
+			<? endforeach;  ?>
 		</ul>
 
 	</div>
