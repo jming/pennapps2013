@@ -197,8 +197,8 @@ function getRandomLatLng(map) {
 }
 
 function loadData() {
-  //var data = <php echo get_data(); ?>;
-  d3.json("js/outbreaks.json", function(error, data) {
+  var data = <?php echo get_data(); ?>;
+  //d3.json("js/outbreaks.json", function(error, data) {
     flatDB = [];
 
     data.forEach(function(d) {
@@ -248,6 +248,6 @@ function loadData() {
 	  
     // Add markers
     showMap();
-  });
+  //});
 };
 </script>
