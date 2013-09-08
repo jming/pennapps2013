@@ -51,6 +51,17 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <link rel="stylesheet" href="lib/Leaflet.markercluster/dist/MarkerCluster.css" />
+    
+    <link rel="stylesheet" href="css/custom-marker-cluster.css" />
+  	<!--[if lte IE 8]><link rel="stylesheet" href="css/custom-marker-cluster-ie.css" /><![endif]-->
+    <script src="lib/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
 		<script>
 			$(document).ready(function () {
 				var Geo = {};
@@ -135,6 +146,32 @@
 				float: right;
 				font-size: 16px;
 			}
+
+      .ui-content {
+        padding: 0;
+      }
+      
+      #map {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        overflow: hidden;
+      }
+      
+      .my-div-icon {
+      	width: 10px;
+      	height: 10px;
+      
+      	text-align: center;
+      	border-radius: 5px;
+      	color: white;
+      	font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+      }
+      
+      div.my-div-icon:hover {
+      	border: 2px solid white;
+      }
 		</style>
 	</head>
 <body>
@@ -148,7 +185,7 @@
 	</div>
 
 	<div data-role="content">
-		TODO: Place visualization data here.
+		<?php include 'map.php'; ?>
 	</div>
 
 </div>
@@ -184,30 +221,6 @@
 			<? endforeach; ?>
 		</ul>
 
-	</div>
-
-</div>
-
-<div data-role="dialog" id="database-success" data-theme="a">
-
-	<div data-role="header">
-		<h1>Report Status</h1>
-	</div>
-
-	<div data-role="content">
-		Your report of a malaria incident has successfully been recorded to the server!
-	</div>
-
-</div>
-
-<div data-role="dialog" id="database-failure" data-theme="a">
-
-	<div data-role="header">
-		<h1>Report Status</h1>
-	</div>
-
-	<div data-role="content">
-		ERROR: Your report of a malaria incident has not successfully been recorded to the server. Please try again.
 	</div>
 
 </div>
