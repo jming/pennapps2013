@@ -1,5 +1,16 @@
 <!-- TODO: ADD JS VALIDATION FOR FIELDS -->
 <?
+	
+	$help_text = array(
+		"location" => array("Where are you located?", "Reply with \"location [location]\".", "For example, you can input the name of the nearest school, post office, hospital, etc. as a means of indicating your location."),
+		"symptoms" => array("What symptoms occur?", "Reply with \"symptoms [space separated list of symptoms]\".", "Examples of symptoms are chills, fever, headache, fatigue, nausea, vomiting, cough."),
+		"date-onset" => array("What date did the symptoms begin?", "Reply with \"date-onset YYYY-MM-DD\"", "Please be as accurate as you can, but if you are not sure, feel free to estimate a date within two or three days."),
+		"diagnose" => array("Has the patient been diagnosed with malaria by a health professional?", "Reply with \"diagnose [yes/no]\"", ""),
+		"date-diagnosed" => array("If the patient has been diagnosed, what was the date of the diagnosis?", "Reply with \"date-diagnosed YYYY-MM-DD\"", ""),
+		"age" => array("What age is the patient?", "Reply with \"age [age]\" or \"age -\" if you prefer not to answer.", ""),
+		"gender" => array("What is the gender of the patient?", " Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer.", "")
+	);
+
 	if ($_POST) {
 		require_once("database.php");
 		connect_db();
@@ -13,21 +24,19 @@
 		$longitude = mysql_real_escape_string($_POST["longitude"]);
 		$currentdate = mysql_real_escape_string($_POST["currentdate"]);
 		$symptoms = $_POST["symptoms"];
-		// TODO: how do we want the location formatted?
 		$location = mysql_real_escape_string($_POST["location-current"]);
 		$date_current = date(mysql_real_escape_string($_POST["date-current"]));
 
-		// TODO: update sql query based on table structure 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
-			// TODO: display error
+			// $("#database-failure").popup();
 		else:
 			$id = mysql_insert_id();
 			foreach ($symptoms as $symp) {
 				$symp = mysql_real_escape_string($symp);
 				$result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
 			}		
-			// TODO: display success
+			//$("#database-success").popup();
 		endif;
 	}
 ?> 
@@ -76,6 +85,27 @@
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
 			}
+
+			function set_help(txts) {
+				$("#help-text00").text(txts[0]);
+				$("#help-text01").text(txts[1]);
+				$("#help-text02").text(txts[2]);
+			}
+
+			// $("input[name=diagnosed]").val().changeselected(function () {
+			// 	console.log("lol");
+			// })
+
+			// $("#diagnosed-radio").change(function() {
+			$("#diagnosed-radio input").change(function () {
+				console.log("lol");
+				if ($("#diagnosed-radio").val() == "y") {
+					$("#diagnosed-datepicker").show();	
+				} 
+				else {
+					$("#diagnosed-datepicker").hide();
+				}
+			});
 		</script>
 		<style>
 			*, .ui-body-a input {
@@ -144,7 +174,7 @@
 <div data-role="page" id="home" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1>Mapping Malaria</h1>
+		<h1>Welcome</h1>
 		<a href="#info" data-icon="info" data-iconpos="notext">Info</a>
 		<a href="#report" data-icon="plus" data-iconpos="notext">Report incident</a>
 	</div>
@@ -158,16 +188,72 @@
 <div data-role="page" id="info" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1>About Mapping Malaria</h1>
+		<h1>Information</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
 	<div data-role="content">
+
+		<h2>About</h2>
 		3.3 billion people, or half the world's population is at risk for malaria. 
-		<br><br>
 		This application will mobile technology to crowd source the spread of malaria to better inform preventative measures.
 		<br><br>
-		<strong>Mapping Malaria</strong> was created by Alisa Nguyen, Deborah Alves, Joy Ming, and Julie Zhang for PennApps Fall 2013.
+		<strong>Mapping Malaria</strong> was created by 
+		Alisa Nguyen, Deborah Alves, Joy Ming, and Julie Zhang for PennApps Fall 2013.
+
+		<h2>Web Help</h2>
+		The homepage will display the visualization of data.
+		There is an option in the top right corner to add a report of an incidence of malaria. 
+		Please fill out each of the fields to the best of your ability. 
+		None of them are required, but more data will help create a better picture of the state of the spread of malaria.
+
+		<h2>SMS Help</h2>
+		To initialize a malaria incidence report, send "REPORT" to (425) 728-7442.
+		You will then be presented a series of the prompts, with each of the prompts detailed below:
+		<ul data-role="listview" data-inset="true">
+			<? foreach ($help_text as $key=>$value): ?>
+			<li data-icon="false"><a href="#help" onclick="set_help(<?= htmlspecialchars(json_encode($value)) ?>)"><?=$value[0]?></a></li>
+			<? endforeach; ?>
+		</ul>
+
+	</div>
+
+</div>
+
+<div data-role="dialog" id="database-success" data-theme="a">
+
+	<div data-role="header">
+		<h1>Report Status</h1>
+	</div>
+
+	<div data-role="content">
+		Your report of a malaria incident has successfully been recorded to the server!
+	</div>
+
+</div>
+
+<div data-role="dialog" id="database-failure" data-theme="a">
+
+	<div data-role="header">
+		<h1>Report Status</h1>
+	</div>
+
+	<div data-role="content">
+		ERROR: Your report of a malaria incident has not successfully been recorded to the server. Please try again.
+	</div>
+
+</div>
+
+<div data-role="dialog" id="help" data-theme="a">
+
+	<div data-role="header">
+		<h1>Help text</h1>
+	</div>
+
+	<div data-role="content">
+		<h2 id="help-text00"></h2>
+		<p style="margin: none;" id="help-text01"></p>
+		<p id="help-text02"></p>
 	</div>
 
 </div>
@@ -175,7 +261,7 @@
 <div data-role="page" id="report" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1>Report Incidence</h1>
+		<h1>Report</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
@@ -211,15 +297,15 @@
 				<input type="date" name="date-onset" id="date-onset" value=""/>
 			</div>
 			<div data-role="fieldcontain">
-				<fieldset data-role="controlgroup">
+				<fieldset data-role="controlgroup" id="diagnosed-radio">
 					<legend>Diagnosed by doctor?</legend>
-					<input type="radio" name="diagnosed" id="radio-yes" value="y"/>
+					<input type="radio" name="diagnosed" id="radio-yes" onclick="$('#diagnosed-datepicker').show(200)" value="y"/>
 					<label for="radio-yes">Yes</label>
-					<input type="radio" name="diagnosed" id="radio-no" value="n"/>
+					<input type="radio" name="diagnosed" id="radio-no" onclick="$('#diagnosed-datepicker').hide(200)" value="n"/>
 					<label for="radio-no">No</label>
 				</fieldset>
 			</div>
-			<div data-role="fieldcontain">
+			<div data-role="fieldcontain" id="diagnosed-datepicker" style="display:none;">
 				<label for="date-diagnosed">Date of diagnosis:</label>
 				<input type="date" name="date-diagnosed" id="date-diagnosed" value=""/>
 			</div>
@@ -227,7 +313,7 @@
 				date_default_timezone_set("America/New_York");
 				$curdate = date('Y-m-d h:i:s', time()); 
 			?>
-			<input type="text" name="currentdate" value="<?= $curdate ?>"/>
+			<input type="hidden" name="currentdate" value="<?= $curdate ?>"/>
 			<input type="hidden" name="latitude" id="location-latitude" />
 			<input type="hidden" name="longitude" id="location-longitude" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
