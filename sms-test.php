@@ -19,14 +19,14 @@
     // and appropriate response by server
     $smsResponses = array(
         "report"=>"[1/7] Where are you located? Reply with \"location [location]\". For example, the name of the nearest school. For help, reply with \"?\"",
-        "location"=>"[2/7] What symptoms occur? Reply with \"symptoms [space separated list of symptoms]\". Examples of symptoms are chills, fever, headache. For help, reply with \"?\"",
+        "location"=>"[2/7] What symptoms occur? Reply with \"symptoms [space separated list of symptoms]\". Examples are chills, fever, headache. For help, reply with \"?\"",
         "symptoms"=>"[3/7] What date did the symptoms begin? Reply with \"date-onset YYYY-MM-DD\" For help, reply with \"?\"",
         "date-onset"=> "[4a/7] Has the patient been diagnosed with malaria by a health professional? Reply with \"diagnose [y/n]\" For help, reply with \"?\"",
         "diagnose"=>"[4b/7] If the patient has been diagnosed, what was the date of the diagnosis? Reply with \"date-diagnosed YYYY-MM-DD\". For help, reply with \"?\"",
         "date-diagnosed"=>"[5/7] What age is the patient? Reply with \"age [age]\" or \"age -\" if you prefer not to answer. For help, reply with \"?\"",
-        "age"=>"[6/7] What is the gender of the patient? Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer. For help, reply with \"?\"",
+        "age"=>"[6/7] What is the gender of the patient? Reply with \"gender [m/f]\" or \"gender -\" if you prefer not to answer. For help, reply with \"?\"",
         "gender"=>"[7/7] Thank you! The malaria incidence has been recorded. Visit deborahhh.com/pennapps/index.php to view the Malaria Map.",
-        "?"=>"Please visit deborahhh.com/pennapps/#info for more information.",
+        "?"=>"Please visit deborahhh.com/pennapps for more information.",
     );
  
     // parse body of text message, if form follows
@@ -55,6 +55,8 @@
         "lat"=>0.123591, "long"=>37.32585,),
         "nairobi"=>array(
         "lat"=>-1.276371, "long"=>36.826758,),
+        "mombasa"=>array(
+        "lat"=>-4.035509, "long"=>39.669521,),
     );
     
     if(count($_SESSION['report']) == 7) {
