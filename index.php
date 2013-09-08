@@ -69,7 +69,6 @@
 				function success(position) {
 					Geo.lat = position.coords.latitude;
 					Geo.lng = position.coords.longitude;
-					console.log("lat:"+Geo.lat+", lng:"+Geo.lng);
 					postPosition(Geo.lat, Geo.lng);
 				}
 
@@ -97,6 +96,12 @@
 	        	$("#message").fadeOut("slow");
 	        	return false;
 	    	});
+
+
+	    	var minheight = parseInt($("div[data-role='page']").css("min-height"),10);
+	    	var headerheight = parseInt($("div[data-role='header']").css("height"),10);
+	    	$("#map").css("min-height", (minheight-headerheight)+"px");
+
 			});
 		</script>
 		<style>
@@ -149,6 +154,7 @@
 
       .ui-content {
         padding: 0;
+        height: 100%;
       }
       
       #map {
