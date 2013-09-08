@@ -1,5 +1,16 @@
 <!-- TODO: ADD JS VALIDATION FOR FIELDS -->
 <?
+	
+	$help_text = array(
+		"location" => array("Where are you located?", "Reply with \"location [location]\".", "For example, you can input the name of the nearest school, post office, hospital, etc. as a means of indicating your location."),
+		"symptoms" => array("What symptoms occur?", "Reply with \"symptoms [space separated list of symptoms]\".", "Examples of symptoms are chills, fever, headache, fatigue, nausea, vomiting, cough."),
+		"date-onset" => array("What date did the symptoms begin?", "Reply with \"date-onset YYYY-MM-DD\"", "Please be as accurate as you can, but if you are not sure, feel free to estimate a date within two or three days."),
+		"diagnose" => array("Has the patient been diagnosed with malaria by a health professional?", "Reply with \"diagnose [yes/no]\"", ""),
+		"date-diagnosed" => array("If the patient has been diagnosed, what was the date of the diagnosis?", "Reply with \"date-diagnosed YYYY-MM-DD\"", ""),
+		"age" => array("What age is the patient?", "Reply with \"age [age]\" or \"age -\" if you prefer not to answer.", ""),
+		"gender" => array("What is the gender of the patient?", " Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer.", "")
+	);
+
 	if ($_POST) {
 		require_once("database.php");
 		connect_db();
@@ -111,7 +122,7 @@
 <div data-role="page" id="home" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1>Mapping Malaria</h1>
+		<h1>Welcome</h1>
 		<a href="#info" data-icon="info" data-iconpos="notext">Info</a>
 		<a href="#report" data-icon="plus" data-iconpos="notext">Report incident</a>
 	</div>
@@ -125,16 +136,49 @@
 <div data-role="page" id="info" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1>About Mapping Malaria</h1>
+		<h1>Information</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
 	<div data-role="content">
+
+		<h2>About</h2>
 		3.3 billion people, or half the world's population is at risk for malaria. 
-		<br><br>
 		This application will mobile technology to crowd source the spread of malaria to better inform preventative measures.
 		<br><br>
-		<strong>Mapping Malaria</strong> was created by Alisa Nguyen, Deborah Alves, Joy Ming, and Julie Zhang for PennApps Fall 2013.
+		<strong>Mapping Malaria</strong> was created by 
+		Alisa Nguyen, Deborah Alves, Joy Ming, and Julie Zhang for PennApps Fall 2013.
+
+		<h2>Web Help</h2>
+		The homepage will display the visualization of data.
+		There is an option in the top right corner to add a report of an incidence of malaria. 
+		Please fill out each of the fields to the best of your ability. 
+		None of them are required, but more data will help create a better picture of the state of the spread of malaria.
+
+		<h2>SMS Help</h2>
+		To initialize a malaria incidence report, send "REPORT" to (425) 728-7442.
+		You will then be presented a series of the prompts, with each of the prompts detailed below:
+		<ul data-role="listview" data-inset="true">
+			<? foreach ($help_text as $h): ?>
+			<li data-icon="false"><a href="#help?type=<?=$h?>"><?=$help_text[$h][0]?></a></li>
+		</ul>
+
+	</div>
+
+</div>
+
+<div data-role="dialog" id="help" data-theme="a">
+
+	<div data-role="header">
+		<h1>Help text</h1>
+	</div>
+
+	<div data-role="content">
+		<? $type = $_POST["type"]?>
+		<h2><? $help_text[$type][0]?></h2>
+		<? $help_text[$type][1] ?> 
+		<br /><br />
+		<? $help_text[$type][2]?>
 	</div>
 
 </div>
@@ -142,7 +186,7 @@
 <div data-role="page" id="report" data-theme="a">
 
 	<div data-role="header" class="malaria-header">
-		<h1>Report Incidence</h1>
+		<h1>Report</h1>
 		<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 	</div>
 
