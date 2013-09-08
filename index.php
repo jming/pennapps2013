@@ -10,7 +10,11 @@
 		$diagnosed = mysql_real_escape_string($_POST["diagnosed"]);
 		$date = date(mysql_real_escape_string($_POST["date-diagnosed"]));
 		$symptoms = $_POST["symptoms"];
+		// TODO: how do we want the location formatted?
+		$location = mysql_real_escape_string($_POST["location-current"]);
+		$date_current = date(mysql_real_escape_string($_POST["date-current"]));
 
+		// TODO: update sql query based on table structure 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date')");
 		if (!$result):
 			// TODO: display error
@@ -35,14 +39,11 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 		<script>
-			// TODO: does this get initialized with the page?
-			$(function() {
-				var Geo={};
+			window.onload = function () {
+				var Geo = {};
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
-
-				// get the latitude and longitude
 				function success(position) {
 					Geo.lat = position.coords.latitude;
 					Geo.lng = position.coords.longitude;
@@ -54,7 +55,7 @@
 				}
 
 				function postPosition(lat, lng) {
-					// TODO: where to pass this information?
+					document.getElementById("location-current").value = (lat,lng);
 				}
 
 				function date() {
@@ -64,9 +65,10 @@
 				}
 
 				function postTime(now) {
-					// TODO: where to pass this information?
+					document.getElementById("date-current").value = now;
 				}
-			})
+
+			}
 		</script>
 		<style>
 			*, .ui-body-a input {
@@ -188,8 +190,8 @@
 				<label for="date-diagnosed">Date of diagnosis:</label>
 				<input type="date" name="date-diagnosed" id="date-diagnosed" value=""/>
 			</div>
-			<!-- Also get current date -->
-			<!-- Also get current location -->
+			<input type="hidden" name="date-current" id="date-current" />
+			<input type="hidden" name="location-current" id="location-current" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
 		</form>
 	</div>
