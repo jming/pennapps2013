@@ -19,7 +19,7 @@
 		$gender = mysql_real_escape_string($_POST["gender"]);
 		$onset = date(mysql_real_escape_string($_POST["date-onset"]));
 		$diagnosed = mysql_real_escape_string($_POST["diagnosed"]);
-		$date = date(mysql_real_escape_string($_POST["date-diagnosed"]));
+		$date = date(mysql_rael_escape_string($_POST["date-diagnosed"]));
 		$latitude = mysql_real_escape_string($_POST["latitude"]);
 		$longitude = mysql_real_escape_string($_POST["longitude"]);
 		$currentdate = mysql_real_escape_string($_POST["currentdate"]);
@@ -39,6 +39,10 @@
 			$("#database-success").popup();
 		endif;
 	}
+
+	$("#diagnosed-radio").change(function() {
+		$("#diagnosed-datepicker").style.display = "block";
+	});
 ?> 
 <html>
 	<head>
@@ -244,7 +248,7 @@
 				<input type="date" name="date-onset" id="date-onset" value=""/>
 			</div>
 			<div data-role="fieldcontain">
-				<fieldset data-role="controlgroup">
+				<fieldset data-role="controlgroup" id="diagnosed-radio">
 					<legend>Diagnosed by doctor?</legend>
 					<input type="radio" name="diagnosed" id="radio-yes" value="y"/>
 					<label for="radio-yes">Yes</label>
@@ -252,7 +256,7 @@
 					<label for="radio-no">No</label>
 				</fieldset>
 			</div>
-			<div data-role="fieldcontain">
+			<div data-role="fieldcontain" id="diagnosed-datepicker" style="display:none;">
 				<label for="date-diagnosed">Date of diagnosis:</label>
 				<input type="date" name="date-diagnosed" id="date-diagnosed" value=""/>
 			</div>
