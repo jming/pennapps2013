@@ -36,7 +36,7 @@
     $field = strtolower($textArray[0]);
     
     if($response = $smsResponses[$field]) {
-        if(strcasecmp($field, "symptoms") == 0) {
+        if(strcmp($field, "symptoms") == 0) {
             $report[$field] = array_slice($textArray, 1);
         } else {
             $report[$field] = strtolower($textArray[1]);
@@ -76,14 +76,12 @@
         $result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$curdate')");
         
 		if (!$result):
-			$("#database-failure").popup();
 		else:
 			$id = mysql_insert_id();
 			foreach ($symptoms as $symp) {
 				$symp = mysql_real_escape_string($symp);
 				$result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
-			}		
-			$("#database-success").popup();
+			}
 		endif;
     }
  
