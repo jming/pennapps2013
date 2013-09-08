@@ -39,15 +39,6 @@
 			//$("#database-success").popup();
 		endif;
 	}
-
-	// $("#diagnosed-radio").change(function() {
-	// 	if ($("#diagnosed-radio").val() == "y") {
-	// 		$("#diagnosed-datepicker").show();	
-	// 	} 
-	// 	else {
-	// 		$("#diagnosed-datepicker").hide();
-	// 	}
-	// });
 ?> 
 <html>
 	<head>
@@ -90,6 +81,15 @@
 				$("#help-text02").text(txts[2]);
 				console.log("lols");
 			}
+
+			$("#diagnosed-radio").change(function() {
+				if ($("#diagnosed-radio").val() == "y") {
+					$("#diagnosed-datepicker").show();	
+				} 
+				else {
+					$("#diagnosed-datepicker").hide();
+				}
+			});
 		</script>
 		<style>
 			*, .ui-body-a input {
