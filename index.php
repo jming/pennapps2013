@@ -62,17 +62,6 @@
 					$("#location-longitude").value = lng;
 				}
 
-				function date() {
-					var now = new Date();
-					now = now.getFullYear()+'-'+now.getMonth()+'-'+now.getDate()+" "+
-						now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
-					postTime(now);
-				}
-
-				function postTime(now) {
-					$("#date-current").value = now;
-				}
-
 			}
 		</script>
 		<style>
@@ -195,7 +184,11 @@
 				<label for="date-diagnosed">Date of diagnosis:</label>
 				<input type="date" name="date-diagnosed" id="date-diagnosed" value=""/>
 			</div>
-			<input type="hidden" name="currentdate" id="date-current" />
+			<?
+				date_default_timezone_set("America/New_York");
+				$curdate = date('m/d/Y h:i:s', time()); 
+			?>
+			<input type="hidden" name="currentdate" value="<?= $curdate ?>">
 			<input type="hidden" name="latitude" id="location-latitude" />
 			<input type="hidden" name="longitude" id="location-longitude" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
