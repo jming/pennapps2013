@@ -10,17 +10,9 @@
     // get the session varible if it exists
     $report = $_SESSION['report'];
  
-    // if it doesnt, set the default
-    if(!strlen($report)) {
-        $report = array(
-        "location"=>"",
-        "symptoms"=>array(),
-        "date-onset"=>"",
-        "diagnose"=>"",
-        "date-diagnosed"=>"",
-        "age"=>"",
-        "gender"=>"",
-        );
+    // if it doesn't exist or if report already submitted, set the default
+    if(!count($report) || count($report) == 7) {
+        $report = array();
     }
  
     // make an associative array of received text content
@@ -41,41 +33,27 @@
     // one of the standard report texts, collect data and reply
     $text = $_REQUEST['Body'];
     $textArray = explode(" ", $text);
+    $field = strtolower($textArray[0]);
     
-    if($response = $smsResponses[strtolower($textArray[0])]) {
-        if(!strcasecmp($textArray[0], "?")) {
-            if(strcasecmp($textArray[0], "symptoms")) {
-                $report["symptoms"] = array_slice($textArray, 1);
-            }else {
-                $report[strtolower($textArray[0])] = strtolower($textArray[1]);
-            }
-        }
-    } else {
-        $response = $sms_responses["?"];
+    if($response = $smsResponses[$field]) {
+        $report[$field] = strtolower($textArray[1]);
     }
     
     // save it
     $_SESSION['report'] = $report;
- 
-    // if all fields in $_SESSION['report'] filled in, add new entry to SQL table
-    $filled = 0;
-    foreach($report as $rep=>$val) {
-        if(!strlen($val)) {
-            $filled++;
-        }
-    }
     
     $locs = array(
-        "nakuru high school"=>array(
+        "nakuru"=>array(
         "lat"=>-0.273799, "long"=>36.094011,),
-        "riruta starehe school"=>array(
+        "riruta"=>array(
         "lat"=>-1.290786, "long"=>36.728618,),
-        "maritati primary school"=>array(
+        "maritati"=>array(
         "lat"=>0.123591, "long"=>37.32585,),
-        
+        "nairobi"=>array(
+        "lat"=>-1.276371, "long"=>36.826758,),
     );
     
-    if($filled == 0) {
+    if(count($_SESSION['report']) == 7) {
         $age = mysql_real_escape_string($report["age"]);
         $gender = mysql_real_escape_string($report["gender"]);
         $onset = date(mysql_real_escape_string($report["date-onset"]));
