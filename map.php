@@ -1,6 +1,6 @@
 <?php require_once("database.php"); ?>
 
-<div id="map"></div>
+<div id="map" style="height: 100% !important;"></div>
 <script>
 
 /*************************************************************************
