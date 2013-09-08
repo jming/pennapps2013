@@ -24,21 +24,19 @@
 		$longitude = mysql_real_escape_string($_POST["longitude"]);
 		$currentdate = mysql_real_escape_string($_POST["currentdate"]);
 		$symptoms = $_POST["symptoms"];
-		// TODO: how do we want the location formatted?
 		$location = mysql_real_escape_string($_POST["location-current"]);
 		$date_current = date(mysql_real_escape_string($_POST["date-current"]));
 
-		// TODO: update sql query based on table structure 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
-			// TODO: display error
+			$("#database-failure").popup();
 		else:
 			$id = mysql_insert_id();
 			foreach ($symptoms as $symp) {
 				$symp = mysql_real_escape_string($symp);
 				$result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
 			}		
-			// TODO: display success
+			$("#database-success").popup();
 		endif;
 	}
 ?> 
@@ -163,6 +161,30 @@
 			?>
 		</ul>
 
+	</div>
+
+</div>
+
+<div data-role="dialog" id="database-success" data-theme="a">
+
+	<div data-role="header">
+		<h1>Report Status</h1>
+	</div>
+
+	<div data-role="content">
+		Your report of a malaria incident has successfully been recorded to the server!
+	</div>
+
+</div>
+
+<div data-role="dialog" id="database-failure" data-theme="a">
+
+	<div data-role="header">
+		<h1>Report Status</h1>
+	</div>
+
+	<div data-role="content">
+		ERROR: Your report of a malaria incident has not successfully been recorded to the server. Please try again.
 	</div>
 
 </div>
