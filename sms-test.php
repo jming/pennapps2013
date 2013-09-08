@@ -75,6 +75,16 @@
         }
     }
     
+    $locs = array(
+        "nakuru high school"=>array(
+        "lat"=>-0.273799, "long"=>36.094011,),
+        "riruta starehe school"=>array(
+        "lat"=>-1.290786, "long"=>36.728618,),
+        "maritati primary school"=>array(
+        "lat"=>0.123591, "long"=>37.32585,),
+        
+    );
+    
     if($filled == 0) {
         $age = mysql_real_escape_string($report["age"]);
         $gender = mysql_real_escape_string($report["gender"]);
@@ -82,10 +92,17 @@
         $diagnosed = mysql_real_escape_string($report["diagnosed"]);
         $date = date(mysql_real_escape_string($report["date-diagnosed"]));
         $symptoms = $report["symptoms"];
-        $location = mysql_real_escape_string($report["location"]);
-		$date_current = date('Y-m-d');
+        $latitude = 0;
+        $longitude = 0;
+        if($newloc = $locs[strtolower($report['location'])]) {
+            $latitude =  $newloc["lat"];
+            $longitude = $newloc["long"];
+        }
+        date_default_timezone_set("America/New_York");
+        $curdate = date('Y-m-d h:i:s', time()); 
 
-        $result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date')");
+        $result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$curdate')");
+        
         if (!$result):
             // TODO: display error
         else:
