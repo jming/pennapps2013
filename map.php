@@ -83,6 +83,16 @@ window.onresize = function() {
 		.style("min-height", window.innerHeight - 62 + "px");
 }
 
+var int2 = self.setInterval(pulse, 2000);
+
+function pulse() {
+  d3.selectAll(".marker-cluster").transition()
+    .duration(750)
+    .attr("opacity", 0)
+    .transition()
+      .duration(750)
+      .attr("opacity", 0.6);
+}
 map.invalidateSize();
 
 /* Update the markers every second */
