@@ -225,7 +225,7 @@
 
 		<h2>About</h2>
 		3.3 billion people, or half the world's population is at risk for malaria. 
-		This application will mobile technology to crowd source the spread of malaria to better inform preventative measures.
+		This application will use mobile technology to crowd source the spread of malaria to better inform preventative measures.
 		<br><br>
 		<strong>Mapping Malaria</strong> was created by 
 		Alisa Nguyen, Deborah Alves, Joy Ming, and Julie Zhang for PennApps Fall 2013.
