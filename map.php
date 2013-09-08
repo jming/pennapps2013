@@ -181,8 +181,7 @@ function getRandomLatLng(map) {
 }
 
 function loadData() {
-  var db_data = <?php echo get_data() ?>;
-	var data = JSON.parse(db_data);
+  var data = <?php echo get_data(); ?>;
   //d3.json("js/outbreaks.json", function(error, data) {
     flatDB = [];
 
