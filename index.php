@@ -17,6 +17,7 @@
 		$location = mysql_real_escape_string($_POST["location-current"]);
 		$date_current = date(mysql_real_escape_string($_POST["date-current"]));
 
+		var_dump($currentdate);
 		// TODO: update sql query based on table structure 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
@@ -44,12 +45,11 @@
 		<script>
 			window.onload = function () {
 				var Geo = {};
-				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(success, error);
-				}
+
 				function success(position) {
 					Geo.lat = position.coords.latitude;
 					Geo.lng = position.coords.longitude;
+					console.log("lat:"+Geo.lat+", lng:"+Geo.lng);
 					postPosition(Geo.lat, Geo.lng);
 				}
 
@@ -58,10 +58,13 @@
 				}
 
 				function postPosition(lat, lng) {
-					$("#location-latitude").value = lat;
-					$("#location-longitude").value = lng;
+					$("#location-latitude").val(lat);
+					$("#location-longitude").val(lng);
 				}
 
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(success, error);
+				}
 			}
 		</script>
 		<style>
@@ -188,7 +191,7 @@
 				date_default_timezone_set("America/New_York");
 				$curdate = date('m-d-Y h:i:s', time()); 
 			?>
-			<input type="hidden" name="currentdate" value="<?= $curdate ?>">
+			<input type="hidden" name="currentdate" value="<?= $curdate ?>"/>
 			<input type="hidden" name="latitude" id="location-latitude" />
 			<input type="hidden" name="longitude" id="location-longitude" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
