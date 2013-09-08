@@ -172,8 +172,15 @@
       div.my-div-icon:hover {
       	border: 2px solid white;
       }
-
-      #map { height: 100%; }
+      
+      .leaflet-popup-content {
+        color: black;
+        text-shadow: none;
+      }
+      
+      .leaflet-control-attribution {
+        text-shadow: none;
+      }
 		</style>
 	</head>
 <body>

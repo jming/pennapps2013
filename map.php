@@ -92,7 +92,7 @@ function showMap() {
   populate(markersList, markers);
   map.addLayer(markers);
 
-    var cases = g.selectAll("circle")
+    var cases = g.selectAll(".case")
       .data(flatDB);
     
     cases.attr("cx", function(d, i) {
