@@ -11,13 +11,12 @@
 		$date = date(mysql_real_escape_string($_POST["date-diagnosed"]));
 		$latitude = mysql_real_escape_string($_POST["latitude"]);
 		$longitude = mysql_real_escape_string($_POST["longitude"]);
-		$currentdate = date(mysql_real_escape_string($_POST["currentdate"]));
+		$currentdate = mysql_real_escape_string($_POST["currentdate"]);
 		$symptoms = $_POST["symptoms"];
 		// TODO: how do we want the location formatted?
 		$location = mysql_real_escape_string($_POST["location-current"]);
 		$date_current = date(mysql_real_escape_string($_POST["date-current"]));
 
-		var_dump($currentdate);
 		// TODO: update sql query based on table structure 
 		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
