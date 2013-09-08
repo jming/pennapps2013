@@ -186,7 +186,7 @@
 			</div>
 			<?
 				date_default_timezone_set("America/New_York");
-				$curdate = date('m/d/Y h:i:s', time()); 
+				$curdate = date('m-d-Y h:i:s', time()); 
 			?>
 			<input type="hidden" name="currentdate" value="<?= $curdate ?>">
 			<input type="hidden" name="latitude" id="location-latitude" />
