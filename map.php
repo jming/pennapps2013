@@ -77,7 +77,7 @@ var g = svg.append("g")
         .attr("class", "leaflet-zoom-hide")
         .attr("id", "outbreak_overlay");
 
-//window.onload = loadData;
+window.onload = loadData;
 window.onresize = function() {
 	d3.select("#map")
 		.style("min-height", window.innerHeight - 62 + "px");
@@ -172,8 +172,7 @@ function populate(markersList, markers) {
 }
 
 function createMarker(d, i, array) {
-  var m = new L.Marker(new L.LatLng(d.coordinates[0], d.coordinates[1]),
-    { opacity: getOpacity(d.onset) });
+  var m = new L.Marker(new L.LatLng(d.coordinates[0], d.coordinates[1]));
   m.bindPopup([
 					'<strong>Malaria Case</strong>',
 					'<br /> Age: ', d.age,
@@ -197,6 +196,8 @@ function getRandomLatLng(map) {
 }
 
 function loadData() {
+  map.invalidateSize();
+
   var data = <?php echo get_data(); ?>;
   //d3.json("js/outbreaks.json", function(error, data) {
     flatDB = [];
