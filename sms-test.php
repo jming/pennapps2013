@@ -4,11 +4,6 @@
     require_once("database.php");
     connect_db();
     
-    function merge_arrays ($key, $value)
-    {
-        return $key .":". $value .", ";
-    }
-    
     // start the session
     session_start();
  
@@ -40,8 +35,6 @@
         "age"=>"[6/7] What is the gender of the patient? Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer. For help, reply with \"?\"",
         "gender"=>"[7/7] Thank you! The malaria incidence has been recorded. Visit deborahhh.com/index.php to view the Malaria Map.",
         "?"=>"Please visit deborahhh.com/help for more information.",
-        // for debugging purposes
-        "done"=>"",
     );
  
     // parse body of text message, if form follows
@@ -53,15 +46,12 @@
         if(!strcasecmp($textArray[0], "?")) {
             if(strcasecmp($textArray[0], "symptoms")) {
                 $report["symptoms"] = array_slice($textArray, 1);
-            } elseif(strcasecmp($textArray[0], "done") {
-                $fixed_array = array_map("merge_arrays", array_keys($report), array_values($report));
-                $response = implode($fixed_array);
             }else {
                 $report[strtolower($textArray[0])] = strtolower($textArray[1]);
             }
         }
     } else {
-        $response = $sms_responses["help"];
+        $response = $sms_responses["?"];
     }
     
     // save it
