@@ -19,8 +19,7 @@
     if(!strlen($report)) {
         $report = array(
         "location"=>"",
-        "symptoms"=>array(
-        ""),
+        "symptoms"=>array(),
         "date-onset"=>"",
         "diagnose"=>"",
         "date-diagnosed"=>"",
@@ -67,6 +66,37 @@
     
     // save it
     $_SESSION['report'] = $report;
+ 
+    // if all fields in $_SESSION['report'] filled in, add new entry to SQL table
+    $filled = 0;
+    foreach($report as $rep=>$val) {
+        if(!strlen($val)) {
+            $filled++;
+        }
+    }
+    
+    if($filled == 0) {
+        $age = mysql_real_escape_string($report["age"]);
+        $gender = mysql_real_escape_string($report["gender"]);
+        $onset = date(mysql_real_escape_string($report["date-onset"]));
+        $diagnosed = mysql_real_escape_string($report["diagnosed"]);
+        $date = date(mysql_real_escape_string($report["date-diagnosed"]));
+        $symptoms = $report["symptoms"];
+        $location = mysql_real_escape_string($report["location"]);
+		$date_current = date('Y-m-d');
+
+        $result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date')");
+        if (!$result):
+            // TODO: display error
+        else:
+            $id = mysql_insert_id();
+            foreach ($symptoms as $symp) {
+                $symp = mysql_real_escape_string($symp);
+                $result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
+            }
+            // TODO: display success
+        endif;
+    }
  
     // now respond to text
     header("content-type: text/xml");
