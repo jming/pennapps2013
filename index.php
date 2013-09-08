@@ -85,11 +85,6 @@
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
 
-				function set_help(txts) {
-					$("#help-text00").text(txts[0]);
-					$("#help-text01").text(txts[1]);
-					$("#help-text02").text(txts[2]);
-				}
 
 				$("#message").fadeIn("slow");
 	    	$("#message a.close-notify").click(function() {
@@ -110,6 +105,12 @@
 	    	$(window).resize(resizemap);
 
 			});
+
+				function set_help(txts) {
+					$("#help-text00").text(txts[0]);
+					$("#help-text01").text(txts[1]);
+					$("#help-text02").text(txts[2]);
+				}
 		</script>
 		<style>
 			*, .ui-body-a input {
