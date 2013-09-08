@@ -209,7 +209,7 @@
 	</div>
 
 	<div data-role="content">
-		<?php include 'map.php'; ?>
+		<?php include_once 'map.php'; ?>
 	</div>
 
 </div>
@@ -271,7 +271,7 @@
 	</div>
 
 	<div data-role="content">
-		<form method="post" action="#home">
+		<form method="post" action="#home" data-ajax="false">
 			<div data-role="fieldcontain">
 				<label for="age">Age:</label>
 				<input type="text" name="age" id="age" value="" data-clear-btn="true"/>
