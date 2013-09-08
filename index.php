@@ -69,7 +69,6 @@
 				function success(position) {
 					Geo.lat = position.coords.latitude;
 					Geo.lng = position.coords.longitude;
-					console.log("lat:"+Geo.lat+", lng:"+Geo.lng);
 					postPosition(Geo.lat, Geo.lng);
 				}
 
@@ -97,6 +96,19 @@
 	        	$("#message").fadeOut("slow");
 	        	return false;
 	    	});
+
+
+	    	function resizemap() {
+	    		var minheight = parseInt($("div[data-role='page']").css("min-height"),10);
+		    	var headerheight = parseInt($("div[data-role='header']").css("height"),10);
+		    	var h = Math.max(420, minheight-headerheight);
+		    	$("#map").css("min-height", h+"px");
+		    	console.log(minheight);
+		    	console.log(headerheight);
+	    	}
+	    	resizemap();
+	    	$(window).resize(resizemap);
+
 			});
 		</script>
 		<style>
@@ -149,6 +161,7 @@
 
       .ui-content {
         padding: 0;
+        height: 100%;
       }
       
       #map {
