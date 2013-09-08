@@ -156,8 +156,11 @@
 		You will then be presented a series of the prompts, with each of the prompts detailed below:
 		<ul data-role="listview" data-inset="true">
 			<? foreach ($help_text as $key=>$value): ?>
-			<li data-icon="false"><a href="#help?type=<?=$key?>"><?=$value[0]?></a></li>
-			<? endforeach; ?>
+			<li data-icon="false"><a href="#help"><?=$value[0]?></a></li>
+			<? 
+				$_SESSION["help-key"] = $key;
+				endforeach; 
+			?>
 		</ul>
 
 	</div>
