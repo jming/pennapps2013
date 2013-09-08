@@ -155,8 +155,9 @@
 		To initialize a malaria incidence report, send "REPORT" to (425) 728-7442.
 		You will then be presented a series of the prompts, with each of the prompts detailed below:
 		<ul data-role="listview" data-inset="true">
-			<? foreach ($help_text as $h): ?>
-			<li data-icon="false"><a href="#help?type=<?=$h?>"><?=$help_text[$h][0]?></a></li>
+			<? foreach ($help_text as $key=>$value): ?>
+			<li data-icon="false"><a href="#help?type=<?=$key?>"><?=$value[0]?></a></li>
+			<? endforeach; ?>
 		</ul>
 
 	</div>
@@ -170,11 +171,11 @@
 	</div>
 
 	<div data-role="content">
-		<? $type = $_POST["type"]?>
-		<h2><? $help_text[$type][0]?></h2>
-		<? $help_text[$type][1] ?> 
+		<? $type = $_GET["type"]; ?>
+		<h2><?= $help_text[$type][0] ?></h2>
+		<?= $help_text[$type][1] ?> 
 		<br /><br />
-		<? $help_text[$type][2]?>
+		<?= $help_text[$type][2] ?>
 	</div>
 
 </div>
