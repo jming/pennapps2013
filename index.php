@@ -98,9 +98,16 @@
 	    	});
 
 
-	    	var minheight = parseInt($("div[data-role='page']").css("min-height"),10);
-	    	var headerheight = parseInt($("div[data-role='header']").css("height"),10);
-	    	$("#map").css("min-height", (minheight-headerheight)+"px");
+	    	function resizemap() {
+	    		var minheight = parseInt($("div[data-role='page']").css("min-height"),10);
+		    	var headerheight = parseInt($("div[data-role='header']").css("height"),10);
+		    	var h = Math.max(420, minheight-headerheight);
+		    	$("#map").css("min-height", h+"px");
+		    	console.log(minheight);
+		    	console.log(headerheight);
+	    	}
+	    	resizemap();
+	    	$(window).resize(resizemap);
 
 			});
 		</script>
