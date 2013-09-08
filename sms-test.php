@@ -4,11 +4,6 @@
     require_once("database.php");
     connect_db();
     
-    function merge_arrays ($key, $value)
-    {
-        return $key .":". $value .", ";
-    }
-    
     // start the session
     session_start();
  
@@ -19,8 +14,7 @@
     if(!strlen($report)) {
         $report = array(
         "location"=>"",
-        "symptoms"=>array(
-        ""),
+        "symptoms"=>array(),
         "date-onset"=>"",
         "diagnose"=>"",
         "date-diagnosed"=>"",
@@ -41,8 +35,6 @@
         "age"=>"[6/7] What is the gender of the patient? Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer. For help, reply with \"?\"",
         "gender"=>"[7/7] Thank you! The malaria incidence has been recorded. Visit deborahhh.com/index.php to view the Malaria Map.",
         "?"=>"Please visit deborahhh.com/help for more information.",
-        // for debugging purposes
-        "done"=>"",
     );
  
     // parse body of text message, if form follows
@@ -54,19 +46,64 @@
         if(!strcasecmp($textArray[0], "?")) {
             if(strcasecmp($textArray[0], "symptoms")) {
                 $report["symptoms"] = array_slice($textArray, 1);
-            } elseif(strcasecmp($textArray[0], "done") {
-                $fixed_array = array_map("merge_arrays", array_keys($report), array_values($report));
-                $response = implode($fixed_array);
             }else {
                 $report[strtolower($textArray[0])] = strtolower($textArray[1]);
             }
         }
     } else {
-        $response = $sms_responses["help"];
+        $response = $sms_responses["?"];
     }
     
     // save it
     $_SESSION['report'] = $report;
+ 
+    // if all fields in $_SESSION['report'] filled in, add new entry to SQL table
+    $filled = 0;
+    foreach($report as $rep=>$val) {
+        if(!strlen($val)) {
+            $filled++;
+        }
+    }
+    
+    $locs = array(
+        "nakuru high school"=>array(
+        "lat"=>-0.273799, "long"=>36.094011,),
+        "riruta starehe school"=>array(
+        "lat"=>-1.290786, "long"=>36.728618,),
+        "maritati primary school"=>array(
+        "lat"=>0.123591, "long"=>37.32585,),
+        
+    );
+    
+    if($filled == 0) {
+        $age = mysql_real_escape_string($report["age"]);
+        $gender = mysql_real_escape_string($report["gender"]);
+        $onset = date(mysql_real_escape_string($report["date-onset"]));
+        $diagnosed = mysql_real_escape_string($report["diagnosed"]);
+        $date = date(mysql_real_escape_string($report["date-diagnosed"]));
+        $symptoms = $report["symptoms"];
+        $latitude = 0;
+        $longitude = 0;
+        if($newloc = $locs[strtolower($report['location'])]) {
+            $latitude =  $newloc["lat"];
+            $longitude = $newloc["long"];
+        }
+        date_default_timezone_set("America/New_York");
+        $curdate = date('Y-m-d h:i:s', time()); 
+
+        $result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$curdate')");
+        
+        if (!$result):
+            // TODO: display error
+        else:
+            $id = mysql_insert_id();
+            foreach ($symptoms as $symp) {
+                $symp = mysql_real_escape_string($symp);
+                $result = mysql_query("INSERT INTO symptoms (report_id, symptom) VALUES ($id, '$symp')");
+            }
+            // TODO: display success
+        endif;
+    }
  
     // now respond to text
     header("content-type: text/xml");

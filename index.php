@@ -20,13 +20,16 @@
 		$onset = date(mysql_real_escape_string($_POST["date-onset"]));
 		$diagnosed = mysql_real_escape_string($_POST["diagnosed"]);
 		$date = date(mysql_real_escape_string($_POST["date-diagnosed"]));
+		$latitude = mysql_real_escape_string($_POST["latitude"]);
+		$longitude = mysql_real_escape_string($_POST["longitude"]);
+		$currentdate = mysql_real_escape_string($_POST["currentdate"]);
 		$symptoms = $_POST["symptoms"];
 		// TODO: how do we want the location formatted?
 		$location = mysql_real_escape_string($_POST["location-current"]);
 		$date_current = date(mysql_real_escape_string($_POST["date-current"]));
 
 		// TODO: update sql query based on table structure 
-		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date')");
+		$result = mysql_query("INSERT INTO reports (age, gender, onset, diagnosed, diagdate, latitude, longitude, currentdate) VALUES ($age, '$gender', '$onset', '$diagnosed', '$date', '$latitude', '$longitude', '$currentdate')");
 		if (!$result):
 			// TODO: display error
 		else:
@@ -52,12 +55,11 @@
 		<script>
 			window.onload = function () {
 				var Geo = {};
-				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(success, error);
-				}
+
 				function success(position) {
 					Geo.lat = position.coords.latitude;
 					Geo.lng = position.coords.longitude;
+					console.log("lat:"+Geo.lat+", lng:"+Geo.lng);
 					postPosition(Geo.lat, Geo.lng);
 				}
 
@@ -66,19 +68,13 @@
 				}
 
 				function postPosition(lat, lng) {
-					document.getElementById("location-current").value = (lat,lng);
+					$("#location-latitude").val(lat);
+					$("#location-longitude").val(lng);
 				}
 
-				function date() {
-					var now = new Date();
-					now = now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
-					postTime(now);
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(success, error);
 				}
-
-				function postTime(now) {
-					document.getElementById("date-current").value = now;
-				}
-
 			}
 		</script>
 		<style>
@@ -234,8 +230,13 @@
 				<label for="date-diagnosed">Date of diagnosis:</label>
 				<input type="date" name="date-diagnosed" id="date-diagnosed" value=""/>
 			</div>
-			<input type="hidden" name="date-current" id="date-current" />
-			<input type="hidden" name="location-current" id="location-current" />
+			<?
+				date_default_timezone_set("America/New_York");
+				$curdate = date('Y-m-d h:i:s', time()); 
+			?>
+			<input type="text" name="currentdate" value="<?= $curdate ?>"/>
+			<input type="hidden" name="latitude" id="location-latitude" />
+			<input type="hidden" name="longitude" id="location-longitude" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
 		</form>
 	</div>
