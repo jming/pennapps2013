@@ -48,7 +48,9 @@ function showMap() {
   	}).addTo(map);
   */
   // Clear old markers
-  markers.clearLayers();
+  if (markers != null) {
+    markers.clearLayers();
+  }
   
   markers = new L.MarkerClusterGroup({showCoverageOnHover: false});
   var markersList = [];
