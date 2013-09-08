@@ -79,10 +79,15 @@
 				$("#help-text00").text(txts[0]);
 				$("#help-text01").text(txts[1]);
 				$("#help-text02").text(txts[2]);
-				console.log("lols");
 			}
 
-			$("#diagnosed-radio").change(function() {
+			// $("input[name=diagnosed]").val().changeselected(function () {
+			// 	console.log("lol");
+			// })
+
+			// $("#diagnosed-radio").change(function() {
+			$("#diagnosed-radio input").change(function () {
+				console.log("lol");
 				if ($("#diagnosed-radio").val() == "y") {
 					$("#diagnosed-datepicker").show();	
 				} 
@@ -257,9 +262,9 @@
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup" id="diagnosed-radio">
 					<legend>Diagnosed by doctor?</legend>
-					<input type="radio" name="diagnosed" id="radio-yes" value="y"/>
+					<input type="radio" name="diagnosed" id="radio-yes" onclick="$('#diagnosed-datepicker').show(200)" value="y"/>
 					<label for="radio-yes">Yes</label>
-					<input type="radio" name="diagnosed" id="radio-no" value="n"/>
+					<input type="radio" name="diagnosed" id="radio-no" onclick="$('#diagnosed-datepicker').hide(200)" value="n"/>
 					<label for="radio-no">No</label>
 				</fieldset>
 			</div>
@@ -271,7 +276,7 @@
 				date_default_timezone_set("America/New_York");
 				$curdate = date('Y-m-d h:i:s', time()); 
 			?>
-			<input type="text" name="currentdate" value="<?= $curdate ?>"/>
+			<input type="hidden" name="currentdate" value="<?= $curdate ?>"/>
 			<input type="hidden" name="latitude" id="location-latitude" />
 			<input type="hidden" name="longitude" id="location-longitude" />
 			<button type="submit" name="submit" value="submit-value">Submit</button>
