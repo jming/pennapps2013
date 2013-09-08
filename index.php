@@ -19,7 +19,7 @@
 		$gender = mysql_real_escape_string($_POST["gender"]);
 		$onset = date(mysql_real_escape_string($_POST["date-onset"]));
 		$diagnosed = mysql_real_escape_string($_POST["diagnosed"]);
-		$date = date(mysql_rael_escape_string($_POST["date-diagnosed"]));
+		$date = date(mysql_real_escape_string($_POST["date-diagnosed"]));
 		$latitude = mysql_real_escape_string($_POST["latitude"]);
 		$longitude = mysql_real_escape_string($_POST["longitude"]);
 		$currentdate = mysql_real_escape_string($_POST["currentdate"]);
@@ -82,6 +82,13 @@
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
+			}
+
+			function set_help(txts) {
+				$("#help-text00").text(txts[0]);
+				$("#help-text01").text(txts[1]);
+				$("#help-text02").text(txts[2]);
+				console.log("lols");
 			}
 		</script>
 		<style>
@@ -163,8 +170,8 @@
 		You will then be presented a series of the prompts, with each of the prompts detailed below:
 		<ul data-role="listview" data-inset="true">
 			<? foreach ($help_text as $key=>$value): ?>
-			<li data-icon="false"><a href="#help"><?=$value[0]?></a></li>
-			<? endforeach;  ?>
+			<li data-icon="false"><a href="#help" onclick="set_help(<?= htmlspecialchars(json_encode($value)) ?>)"><?=$value[0]?></a></li>
+			<? endforeach; ?>
 		</ul>
 
 	</div>
@@ -202,11 +209,9 @@
 	</div>
 
 	<div data-role="content">
-		<? $type = $_GET["type"]; ?>
-		<h2><?= $help_text[$type][0] ?></h2>
-		<?= $help_text[$type][1] ?> 
-		<br /><br />
-		<?= $help_text[$type][2] ?>
+		<h2 id="help-text00"></h2>
+		<p style="margin: none;" id="help-text01"></p>
+		<p id="help-text02"></p>
 	</div>
 
 </div>
