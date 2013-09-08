@@ -172,6 +172,8 @@
       div.my-div-icon:hover {
       	border: 2px solid white;
       }
+
+      #map { height: 100%; }
 		</style>
 	</head>
 <body>
