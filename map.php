@@ -172,8 +172,7 @@ function populate(markersList, markers) {
 }
 
 function createMarker(d, i, array) {
-  var m = new L.Marker(new L.LatLng(d.coordinates[0], d.coordinates[1]),
-    { opacity: getOpacity(d.onset) });
+  var m = new L.Marker(new L.LatLng(d.coordinates[0], d.coordinates[1]));
   m.bindPopup([
 					'<strong>Malaria Case</strong>',
 					'<br /> Age: ', d.age,
