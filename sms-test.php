@@ -1,4 +1,14 @@
 <?php
+
+    // set up connection to mySql database
+    require_once("database.php");
+    connect_db();
+    
+    function merge_arrays ($key, $value)
+    {
+        return $key .":". $value .", ";
+    }
+    
     // start the session
     session_start();
  
@@ -9,39 +19,45 @@
     if(!strlen($report)) {
         $report = array(
         "location"=>"",
-        "age"=>"",
-        "gender"=>"",
         "symptoms"=>array(
         ""),
+        "date-onset"=>"",
+        "diagnose"=>"",
+        "date-diagnosed"=>"",
+        "age"=>"",
+        "gender"=>"",
         );
     }
  
     // make an associative array of received text content
     // and appropriate response by server
     $smsResponses = array(
-        "report"=>"Where are you located? Reply with location <location>, for example, the name of the nearest school.",
-        "location"=>"What age is the patient? Reply with age <age>",
-        "age"=>"What is the gender of the patient? Reply with gender: <gender>",
-        "gender"=>"What symptoms occur? Reply with symptoms <space separated list of symptoms>. Examples of symptoms are chills, fever, headache",
-        "symptoms"=>"What date did the symptoms begin? Reply with date YYYY/MM/DD",
-        "help"=>"HELP TEXT HERE",
+        "report"=>"[1/7] Where are you located? Reply with \"location [location]\". For example, the name of the nearest school. For help, reply with \"?\"",
+        "location"=>"[2/7] What symptoms occur? Reply with \"symptoms [space separated list of symptoms]\". Examples of symptoms are chills, fever, headache. For help, reply with \"?\"",
+        "symptoms"=>"[3/7] What date did the symptoms begin? Reply with \"date-onset YYYY-MM-DD\" For help, reply with \"?\"",
+        "date-onset"=> "[4a/7] Has the patient been diagnosed with malaria by a health professional? Reply with \"diagnose [yes/no]\" For help, reply with \"?\"",
+        "diagnose"=>"[4b/7] If the patient has been diagnosed, what was the date of the diagnosis? Reply with \"date-diagnosed YYYY-MM-DD\" For help, reply with \"?\"",
+        "date-diagnosed"=>"[5/7] What age is the patient? Reply with \"age [age]\" or \"age -\" if you prefer not to answer. For help, reply with \"?\"",
+        "age"=>"[6/7] What is the gender of the patient? Reply with \"gender [gender]\" or \"gender -\" if you prefer not to answer. For help, reply with \"?\"",
+        "gender"=>"[7/7] Thank you! The malaria incidence has been recorded. Visit deborahhh.com/index.php to view the Malaria Map.",
+        "?"=>"Please visit deborahhh.com/help for more information.",
+        // for debugging purposes
+        "done"=>"",
     );
  
-    // Parse body of text message, if form follows
-    // one of [FIVE] standard report texts, collect
-    // data and reply.
-    $text = $_REQUEST['body'];
+    // parse body of text message, if form follows
+    // one of the standard report texts, collect data and reply
+    $text = $_REQUEST['Body'];
     $textArray = explode(" ", $text);
     
     if($response = $smsResponses[strtolower($textArray[0])]) {
-        $inner = "firstloop";
-        if(!strcasecmp($textArray[0], "help")) {
-            $inner = "helploop";
+        if(!strcasecmp($textArray[0], "?")) {
             if(strcasecmp($textArray[0], "symptoms")) {
-                $inner = "inner";
                 $report["symptoms"] = array_slice($textArray, 1);
-            } else {
-                $inner = "else";
+            } elseif(strcasecmp($textArray[0], "done") {
+                $fixed_array = array_map("merge_arrays", array_keys($report), array_values($report));
+                $response = implode($fixed_array);
+            }else {
                 $report[strtolower($textArray[0])] = strtolower($textArray[1]);
             }
         }
@@ -57,5 +73,5 @@
     echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
-    <Sms><?php echo($response); echo(strtolower($textArray[0])); echo($inner); ?></Sms>
+    <Sms><?php echo($response);?></Sms>
 </Response>
