@@ -56,11 +56,11 @@
       <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
     <![endif]-->
     <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-    <link rel="stylesheet" href="lib/Leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="lib/Leaflet.markercluster-master/dist/MarkerCluster.css" />
     
     <link rel="stylesheet" href="css/custom-marker-cluster.css" />
   	<!--[if lte IE 8]><link rel="stylesheet" href="css/custom-marker-cluster-ie.css" /><![endif]-->
-    <script src="lib/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+    <script src="lib/Leaflet.markercluster-master/dist/leaflet.markercluster-src.js"></script>
 		<script>
 			window.onload = function () {
 				var Geo = {};

@@ -74,9 +74,9 @@ var g = svg.append("g")
 //window.onload = loadData;
 
 /* Update the markers every second */
-//var int = self.setInterval(loadData, 5*1000);
+var int = self.setInterval(loadData, 5*1000);
 
-loadData();
+//loadData();
 
 /* Adds markers based on the dataset */
 function showMap() {   	
